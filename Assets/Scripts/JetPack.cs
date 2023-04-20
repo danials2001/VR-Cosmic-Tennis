@@ -12,6 +12,9 @@ public class JetPack : MonoBehaviour
     [SerializeField]
     private GameObject hand;
 
+    [SerializeField]
+    private GameObject racket;
+
     Transform playerTransform;
 
 
@@ -21,6 +24,8 @@ public class JetPack : MonoBehaviour
         playerTransform = transform.Find("TrackingSpace/CenterEyeAnchor");
         rb = transform.GetComponent<Rigidbody>();
         Physics.gravity = new Vector3(0, -0.95f, 0);
+        Physics.IgnoreLayerCollision(3,7);
+        Physics.IgnoreLayerCollision(0,3);
     }
 
     // Update is called once per frame
