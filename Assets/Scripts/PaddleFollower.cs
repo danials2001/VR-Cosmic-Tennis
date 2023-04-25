@@ -7,6 +7,9 @@ public class PaddleFollower : MonoBehaviour
     private PaddleCollider _paddleFollower;
 	private Rigidbody _rigidbody;
 	private Vector3 _velocity;
+	
+	//public float paddleForce = 10f; // The force to apply to the ball
+    public float maxPaddleAngle = 45f; // The maximum angle of deflection
 
 	[SerializeField]
 	private float _sensitivity = 100f;
@@ -31,5 +34,29 @@ public class PaddleFollower : MonoBehaviour
 	{
 		_paddleFollower = paddleFollower;
 	}
+
+	
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Ball")) // Check if the collided object is the ball
+        {
+            Rigidbody ballRigidbody = other.GetComponent<Rigidbody>();
+
+            if (ballRigidbody != null) // Check if the ball has a Rigidbody component
+            {
+                Vector3 paddleToBall = other.transform.position - transform.position;
+                float normalizedPaddlePosition = paddleToBall.x / (transform.localScale.x / 2f);
+                float paddleAngle = maxPaddleAngle * normalizedPaddlePosition;
+
+                // Calculate the velocity to apply to the ball based on the paddle angle
+                //Vector3 velocity = Quaternion.Euler(0f, paddleAngle, 0f) * transform.forward * paddleForce;
+				Vector3 velocity = Quaternion.Euler(0f, paddleAngle, 0f) * transform.forward * _velocity.magnitude;
+
+                // Apply the velocity to the ball
+                ballRigidbody.velocity = velocity;
+            }
+        }
+    }
+
 
 }

@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 2620677533096338287}
   - component: {fileID: 3719711561291366377}
   - component: {fileID: 3719711561291366376}
+  - component: {fileID: 500136541552462960}
   m_Layer: 6
   m_Name: TennisBall
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -114,3 +115,15 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.03429
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &500136541552462960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4566219171999924922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8a7b671d3502a94ca5d633643aac1c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
