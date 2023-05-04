@@ -20,10 +20,8 @@ public class PlayWhooshRacket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(rb.velocity.magnitude);
         if(rb.velocity.magnitude > velocity_threshold) {
             whoosh.Play();
-            Debug.Log("uwu");
         }
 
     }
