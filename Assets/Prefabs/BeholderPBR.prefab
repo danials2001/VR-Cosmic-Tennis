@@ -1664,7 +1664,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7805343005999482623}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f021e990d0463aa4e8ff4dc8342cf916, type: 3}
   m_Name: 
@@ -1672,4 +1672,8 @@ MonoBehaviour:
   player: {fileID: 0}
   projectile: {fileID: 0}
   waitTime: 20
-  forceMultiplyer: 500
+  forceMultiplier: 500
+  maxShootY: 0.8
+  minShootY: -0.1
+  maxShootX: 0.4
+  minShootX: -0.4

@@ -342,11 +342,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e54863570659f9b4198e605fa0386d4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 2018730393}
+  player: {fileID: 1132836401}
   enemy: {fileID: 1875495394}
-  projectile: {fileID: 0}
-  waitTime: 5
   forceMultiplyer: 3
+  velocityThreshold: 2
 --- !u!1 &192211833
 GameObject:
   m_ObjectHideFlags: 0
@@ -2175,22 +2174,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7487410016656624447, guid: 9e6401f8e2320e54797a680db42d218f, type: 3}
   m_PrefabInstance: {fileID: 2036344811}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1875495395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1875495394}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f021e990d0463aa4e8ff4dc8342cf916, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 2018730393}
-  projectile: {fileID: 11877129}
-  waitTime: 20
-  forceMultiplyer: 500
 --- !u!1 &2018730393
 GameObject:
   m_ObjectHideFlags: 0
@@ -2263,6 +2246,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1875495395, guid: 9e6401f8e2320e54797a680db42d218f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7487410016649246973, guid: 9e6401f8e2320e54797a680db42d218f, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0

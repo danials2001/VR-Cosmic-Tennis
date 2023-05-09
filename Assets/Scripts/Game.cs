@@ -41,18 +41,25 @@ public class Game : MonoBehaviour
         transform.position = enemy.transform.position;
         hitSound = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
+        ServeBall(true);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        timer += Time.deltaTime;
-        if(timer > startTime && first)
-        {
-            ServeBall(true);
-            first = false;
-            timer = 0f;
-        }
+        // timer += Time.deltaTime;
+        // if(timer > startTime && first)
+        // {
+        //     ServeBall(true);
+        //     first = false;
+        //     timer = 0f;
+        // }
+        // if (OVRInput.Get(OVRInput.Button.Two))
+        // {
+        //     Vector3 desiredPosition = player.transform.position + (player.transform.forward * 0.5f);
+        //     transform.position = desiredPosition;
+        //     rb.velocity = Vector3.zero;
+        // }
     }
 
     // side = false => player, side = true => enemy
@@ -76,7 +83,8 @@ public class Game : MonoBehaviour
         }
         else
         {
-            transform.position = player.transform.position;// + new Vector3(0f,0f,2f);
+            transform.position = player.transform.position + (player.transform.forward * 0.5f);// + new Vector3(0f,0f,2f);
+            rb.velocity = Vector3.zero;
         }
     }
 
