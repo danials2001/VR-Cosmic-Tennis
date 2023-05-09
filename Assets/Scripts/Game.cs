@@ -65,6 +65,7 @@ public class Game : MonoBehaviour
     // side = false => player, side = true => enemy
     void ServeBall(bool side)
     {
+        rb.velocity = Vector3.zero;
         // shoot from enemy side
         if (side) 
         {
@@ -72,15 +73,18 @@ public class Game : MonoBehaviour
 
             shootForce = forceMultiplyer;
 
-            shootDirection = -transform.forward;
+            randAngleX = Random.Range(-0.1f,0.1f);
+            randAngleY = Random.Range(-0.1f,0.1f);
+
+            shootDirection = -transform.forward + new Vector3(randAngleX,randAngleY,0f);
             rb.AddForce(shootDirection * shootForce);
             anim.Play("Attack01");
             Debug.Log("enemy serve");
+            Debug.Log(shootDirection);
         }
         else
         {
             transform.position = player.transform.position + (player.transform.forward * 0.5f);// + new Vector3(0f,0f,2f);
-            rb.velocity = Vector3.zero;
             Debug.Log("player Serve");
         }
     }
@@ -90,7 +94,7 @@ public class Game : MonoBehaviour
         if(other.gameObject.tag == "PlayerSide")
         {
             enemyScore++;
-            ServeBall(false);
+            ServeBall(true);
         }
         else if(other.gameObject.tag == "EnemySide") 
         {
