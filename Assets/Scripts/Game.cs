@@ -11,7 +11,7 @@ public class Game : MonoBehaviour
     GameObject enemy;
 
     [SerializeField]
-    float forceMultiplyer = 3.0f;
+    float forceMultiplyer = 200.0f;
 
     private AudioSource hitSound;
     private Rigidbody rb;
@@ -68,23 +68,20 @@ public class Game : MonoBehaviour
         // shoot from enemy side
         if (side) 
         {
-            transform.position = enemy.transform.position;
-            randAngleX = Random.Range(-0.5f,0.5f);
-            randAngleY = Random.Range(-0f,4f);
+            transform.position = enemy.transform.position + new Vector3(0f,2f,0f);
 
-            shootForce = Random.Range(0.2f,0.4f) * forceMultiplyer;
+            shootForce = forceMultiplyer;
 
-            shootDirection = transform.forward;
-            shootDirection.x += randAngleX;
-            shootDirection.y += randAngleY;
-            GetComponent<Rigidbody>().AddForce(shootDirection * shootForce);
-            enemy.transform.LookAt(shootDirection);
+            shootDirection = -transform.forward;
+            rb.AddForce(shootDirection * shootForce);
             anim.Play("Attack01");
+            Debug.Log("enemy serve");
         }
         else
         {
             transform.position = player.transform.position + (player.transform.forward * 0.5f);// + new Vector3(0f,0f,2f);
             rb.velocity = Vector3.zero;
+            Debug.Log("player Serve");
         }
     }
 
