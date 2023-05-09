@@ -14,9 +14,20 @@ public class Enemy : MonoBehaviour
     float waitTime = 5.0f;
 
     [SerializeField]
-    float forceMultiplyer = 3.0f;
+    float forceMultiplier = 500.0f;
 
-    private float shootForce = 1.0f;
+
+    [SerializeField]
+    float maxShootY = .8f;
+    [SerializeField]
+    float minShootY = -.1f;
+
+    [SerializeField]
+    float maxShootX = .4f;
+    [SerializeField]
+    float minShootX = -.4f;
+
+    private float randomShootForce = 1.0f;
 
     private float timer = 0.0f;
 
@@ -35,27 +46,58 @@ public class Enemy : MonoBehaviour
     }
 
     // Update is called once per frame
+    // void FixedUpdate()
+    // {
+    //     timer += Time.deltaTime;
+    //     if(timer > waitTime && hasBall)
+    //     {
+    //         projectile.transform.position = transform.position;
+    //         randAngleX = Random.Range(minShootX,maxShootX);
+    //         randAngleY = Random.Range(minShootY,maxShootY);
+
+    //         randomShootForce = Random.Range(0.2f,0.4f) * forceMultiplier;
+
+    //         shootDirection = transform.forward;
+    //         shootDirection.x += randAngleX;
+    //         shootDirection.y += randAngleY;
+
+    //         projectile.transform.GetComponent<Rigidbody>().AddForce(shootDirection.normalized * randomShootForce);
+    //         transform.LookAt(shootDirection);
+    //         anim.Play("Attack01");
+
+    //         //hasBall = false;
+    //         timer = 0.0f;
+    //     }
+    // }
+
     void FixedUpdate()
     {
-        timer += Time.deltaTime;
-        if(timer > waitTime && hasBall)
-        {
-            projectile.transform.position = transform.position;
-            randAngleX = Random.Range(-0.5f,0.5f);
-            randAngleY = Random.Range(-0f,4f);
 
-            shootForce = Random.Range(0.2f,0.4f) * forceMultiplyer;
+    }
 
-            shootDirection = transform.forward;
-            shootDirection.x += randAngleX;
-            shootDirection.y += randAngleY;
+    public void shootBallAtPlayer()
+    {
+        projectile.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        projectile.transform.position = transform.position;
+        transform.LookAt(player.transform);
+        projectile.transform.GetComponent<Rigidbody>().AddForce(transform.forward * forceMultiplier);
+        anim.Play("Attack01");
+    }
 
-            projectile.transform.GetComponent<Rigidbody>().AddForce(shootDirection * shootForce);
-            transform.LookAt(shootDirection);
-            anim.Play("Attack01");
+    public void shootBallRandom() // TODO: Fix Random 
+    {
+        projectile.transform.position = transform.position;
+        randAngleX = Random.Range(minShootX,maxShootX);
+        randAngleY = Random.Range(minShootY,maxShootY);
 
-            //hasBall = false;
-            timer = 0.0f;
-        }
+        randomShootForce = Random.Range(0.2f,0.4f) * forceMultiplier;
+
+        shootDirection = transform.forward;
+        shootDirection.x += randAngleX;
+        shootDirection.y += randAngleY;
+
+        projectile.transform.GetComponent<Rigidbody>().AddForce(shootDirection.normalized * randomShootForce);
+        transform.LookAt(shootDirection);
+        anim.Play("Attack01");
     }
 }
