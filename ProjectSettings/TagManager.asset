@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Ball
-  - Paddle
+  - PlayerSide
+  - EnemySide
   layers:
   - Default
   - TransparentFX
