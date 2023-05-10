@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3719711561291366376}
   - component: {fileID: 500136541552462960}
   - component: {fileID: 2674219063234289933}
+  - component: {fileID: 586052293856628608}
   m_Layer: 6
   m_Name: TennisBall
   m_TagString: Ball
@@ -227,3 +228,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &586052293856628608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4566219171999924922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc4d6d76889211d41b636e99b9c326ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  G: 6.674
+  rb: {fileID: 3719711561291366377}

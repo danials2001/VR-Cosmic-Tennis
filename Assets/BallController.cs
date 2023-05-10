@@ -9,10 +9,12 @@ public class BallController : MonoBehaviour
 
     public Transform Player;
 
+    Rigidbody rb;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = transform.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -26,7 +28,9 @@ public class BallController : MonoBehaviour
 
             // Set the position of the game object to the desired position
             transform.position = desiredPosition;
-            transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
         }
     }
 }

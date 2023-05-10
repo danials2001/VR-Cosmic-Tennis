@@ -5,7 +5,7 @@ using UnityEngine;
 public class BallHit : MonoBehaviour
 {
 
-    public float paddleForce = 10f; // The force to apply to the ball
+    public float paddleForce = 2f; // The force to apply to the ball
     public float maxPaddleAngle = 45f; // The maximum angle of deflection
     // Start is called before the first frame update
     void Start()
