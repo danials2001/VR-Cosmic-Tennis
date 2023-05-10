@@ -36,6 +36,7 @@ public class BallHit : MonoBehaviour
 
                 // Apply the velocity to the ball
                 ballRigidbody.velocity = velocity;
+                Debug.Log("Hit!");
             }
         }
     }

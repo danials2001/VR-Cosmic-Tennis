@@ -11,7 +11,7 @@ public class Game : MonoBehaviour
     GameObject enemy;
 
     [SerializeField]
-    float forceMultiplyer = 200.0f;
+    float forceMultiplyer = 20.0f;
 
     private AudioSource hitSound;
     private Rigidbody rb;
@@ -66,6 +66,7 @@ public class Game : MonoBehaviour
     void ServeBall(bool side)
     {
         rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
         // shoot from enemy side
         if (side) 
         {
@@ -73,10 +74,10 @@ public class Game : MonoBehaviour
 
             shootForce = forceMultiplyer;
 
-            randAngleX = Random.Range(-0.1f,0.1f);
-            randAngleY = Random.Range(-0.1f,0.1f);
+            randAngleX = Random.Range(-0.2f,0.2f);
+            randAngleY = Random.Range(-0.2f,0.2f);
 
-            shootDirection = -transform.forward + new Vector3(randAngleX,randAngleY,0f);
+            shootDirection = enemy.transform.forward + new Vector3(randAngleX,randAngleY,0f);
             rb.AddForce(shootDirection * shootForce);
             anim.Play("Attack01");
             Debug.Log("enemy serve");
@@ -89,12 +90,12 @@ public class Game : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision other) 
+    private void OnTriggerEnter(Collider other) 
     {
         if(other.gameObject.tag == "PlayerSide")
         {
             enemyScore++;
-            ServeBall(true);
+            ServeBall(false);
         }
         else if(other.gameObject.tag == "EnemySide") 
         {

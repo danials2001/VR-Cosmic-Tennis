@@ -35,7 +35,7 @@ public class PaddleFollower : MonoBehaviour
 		transform.rotation = _paddleFollower.transform.rotation;
 
 		if(_rigidbody.velocity.magnitude > velocity_threshold) {
-			Debug.Log(_rigidbody.velocity.magnitude);
+			//Debug.Log(_rigidbody.velocity.magnitude);
 			whoosh.Play();
 		}
 	}
@@ -48,6 +48,7 @@ public class PaddleFollower : MonoBehaviour
 	
     private void OnTriggerEnter(Collider other)
     {
+		Debug.Log(other.name);
         if (other.CompareTag("Ball")) // Check if the collided object is the ball
         {
             Rigidbody ballRigidbody = other.GetComponent<Rigidbody>();
@@ -64,6 +65,7 @@ public class PaddleFollower : MonoBehaviour
 
                 // Apply the velocity to the ball
                 ballRigidbody.velocity = velocity;
+				Debug.Log("hit!!");
             }
         }
     }
