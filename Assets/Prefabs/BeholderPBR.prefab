@@ -1612,6 +1612,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7805343005999258335}
   - component: {fileID: 7805343005992072509}
+  - component: {fileID: 7818476840414618029}
   m_Layer: 0
   m_Name: BeholderPBR
   m_TagString: Untagged
@@ -1656,3 +1657,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &7818476840414618029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7805343005999482623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c106511771ee5d64e930a4c7a23f87bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minX: {fileID: 0}
+  maxX: {fileID: 0}
+  minY: {fileID: 0}
+  maxY: {fileID: 0}
+  time: 4
