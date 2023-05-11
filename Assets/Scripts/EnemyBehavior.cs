@@ -30,7 +30,10 @@ public class EnemyBehavior : MonoBehaviour
     {
         if(other.gameObject.tag == "Ball")
         {
-            other.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * 150f);
+            Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.AddForce(transform.forward * 150f);
         }
     }
 }
