@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Game : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class Game : MonoBehaviour
 
     [SerializeField]
     float forceMultiplyer = 20.0f;
+
+    [SerializeField]
+    TextMeshProUGUI text;
 
     private AudioSource hitSound;
     private Rigidbody rb;
@@ -94,12 +98,13 @@ public class Game : MonoBehaviour
     {
         if(other.gameObject.tag == "PlayerSide")
         {
-            enemyScore++;
+            Debug.Log("Added 1 by collider: " + other.gameObject.name);
+            GameManager.Instance.enemyScore += 1;
             ServeBall(false);
         }
         else if(other.gameObject.tag == "EnemySide") 
         {
-            playerScore++;
+            GameManager.Instance.playerScore += 1;
             ServeBall(true);
         }
         else
