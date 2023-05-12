@@ -7,7 +7,7 @@ public class ScoreManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreText;
 
-    private string[] scoreValues = {"0", "15", "30", "40", "Adv"};
+    private string[] scoreValues = {"0","","15", "","30", "","40", "","Adv"};
     void Awake()
     {
         GameManager.OnGameStateChanged += GameManagerOnBeginGame;
