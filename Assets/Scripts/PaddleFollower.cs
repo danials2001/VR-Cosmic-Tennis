@@ -66,6 +66,7 @@ public class PaddleFollower : MonoBehaviour
                 // Apply the velocity to the ball
                 ballRigidbody.velocity = velocity;
 				Debug.Log("hit!!");
+				OVRInput.SetControllerVibration(1,1,OVRInput.Controller.LTouch);
             }
         }
     }

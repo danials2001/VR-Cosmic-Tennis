@@ -23,7 +23,7 @@ public class JetPack : MonoBehaviour
     {
         playerTransform = transform.Find("TrackingSpace/CenterEyeAnchor");
         rb = transform.GetComponent<Rigidbody>();
-        Physics.gravity = new Vector3(0, -0.95f, 0);
+        Physics.gravity = new Vector3(0, -0.99f, 0);
         Physics.IgnoreLayerCollision(3,7);
         Physics.IgnoreLayerCollision(0,3);
     }
@@ -53,13 +53,16 @@ public class JetPack : MonoBehaviour
         if(thrust > 0.1) { 
             var forceVector = new Vector3(hand.transform.up.x, hand.transform.up.y, 0f)  * thrust * thrustMultiplier;
             rb.AddForce(forceVector);
+            OVRInput.SetControllerVibration(1, thrust, OVRInput.Controller.RTouch);
+            OVRInput.SetControllerVibration(0,0,OVRInput.Controller.RTouch);
         }
 
         float backwardThrust = OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger);
 
         if(backwardThrust > 0.1) { 
-            var forceVector = new Vector3(hand.transform.up.x, hand.transform.up.y, 0f)  * backwardThrust * thrustMultiplier * -1f;
-            rb.AddForce(forceVector);
+            //var forceVector = new Vector3(hand.transform.up.x, hand.transform.up.y, 0f)  * backwardThrust * thrustMultiplier * -1f;
+            //rb.AddForce(forceVector);
+            rb.velocity *= 0.95f;
         }
 
     }

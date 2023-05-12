@@ -41,11 +41,11 @@ public class Game : MonoBehaviour
     void Start()
     {
         anim = enemy.GetComponent<Animator>();
-        anim.Play("IdleNormal");
+        anim.Play("Base Layer.IdleNormal");
         transform.position = enemy.transform.position;
         hitSound = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
-        ServeBall(true);
+        Invoke("ServeBall(false)", 1);
     }
 
     // Update is called once per frame
@@ -83,7 +83,8 @@ public class Game : MonoBehaviour
 
             shootDirection = enemy.transform.forward + new Vector3(randAngleX,randAngleY,0f);
             rb.AddForce(shootDirection * shootForce);
-            anim.Play("Attack01");
+            anim.Play("Base Layer.Attack01");
+            //anim.Play("Base Layer.IdleBattle");
             Debug.Log("enemy serve");
             Debug.Log(shootDirection);
         }
@@ -105,7 +106,11 @@ public class Game : MonoBehaviour
         else if(other.gameObject.tag == "EnemySide") 
         {
             GameManager.Instance.playerScore += 1;
-            ServeBall(true);
+            anim.Play("Base Layer.GetHit");
+            //anim.Play("Base Layer.IdleBattle");
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            Invoke("ServeBall(true)", 1);
         }
         else
         {

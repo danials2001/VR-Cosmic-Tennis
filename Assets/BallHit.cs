@@ -37,6 +37,8 @@ public class BallHit : MonoBehaviour
                 // Apply the velocity to the ball
                 ballRigidbody.velocity = velocity;
                 Debug.Log("Hit!");
+                OVRInput.SetControllerVibration(2,1, OVRInput.Controller.LTouch);
+                //OVRInput.SetControllerVibration(0,0, OVRInput.Controller.LTouch);
             }
         }
     }
