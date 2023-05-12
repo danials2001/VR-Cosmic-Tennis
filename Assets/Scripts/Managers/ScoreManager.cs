@@ -9,7 +9,7 @@ public class ScoreManager : MonoBehaviour
 
     [SerializeField] public TextMeshProUGUI scoreText;
 
-    private string[] scoreValues = {"0","","15", "","30", "","40", "","Adv"};
+    private string[] scoreValues = {"0","15","30","40","Adv"};
     // void Awake()
     // {
     //     // Instance = this;
@@ -44,6 +44,16 @@ public class ScoreManager : MonoBehaviour
     public void UpdateScore()
     {
         scoreText.text = scoreValues[GameManager.Instance.playerScore] + ":" +  scoreValues[GameManager.Instance.enemyScore];
+    }
+
+    public void showWin()
+    {
+        scoreText.text = "You Win!";
+    }
+
+    public void showLose()
+    {
+        scoreText.text = "You Lose!";
     }
 
     //

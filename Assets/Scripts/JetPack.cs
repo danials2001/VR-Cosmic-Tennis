@@ -10,12 +10,21 @@ public class JetPack : MonoBehaviour
     private float thrustMultiplier = 1;
     
     [SerializeField]
-    private GameObject hand;
-
+    private GameObject RHandAnchor;
+    
     [SerializeField]
-    private GameObject racket;
+    private GameObject LHandAnchor;
+    
+    private GameObject hand;
+    
+    private OVRInput.Axis1D inputJetpackController;
+    private OVRInput.Axis1D inputBackwardJetpackController;
+    private OVRInput.Controller controller;
 
     Transform playerTransform;
+
+
+    private bool inputSet = false;
 
 
     // Start is called before the first frame update
@@ -26,6 +35,31 @@ public class JetPack : MonoBehaviour
         Physics.gravity = new Vector3(0, -0.99f, 0);
         Physics.IgnoreLayerCollision(3,7);
         Physics.IgnoreLayerCollision(0,3);
+    }
+
+    public void setInputController(bool isJetPackControllerLeft)
+    {
+        if (!isJetPackControllerLeft)
+        {
+            inputJetpackController = OVRInput.Axis1D.SecondaryIndexTrigger;
+            controller = OVRInput.Controller.RTouch;
+            inputBackwardJetpackController = OVRInput.Axis1D.SecondaryHandTrigger;
+            hand = RHandAnchor;
+        }
+        else
+        {
+            inputJetpackController = OVRInput.Axis1D.PrimaryIndexTrigger;
+            controller = OVRInput.Controller.LTouch;
+            inputBackwardJetpackController = OVRInput.Axis1D.PrimaryHandTrigger;
+            
+            hand = LHandAnchor;
+
+        }
+
+        //  Also need to set GameObject hand to controller vectors
+        
+        
+        inputSet = true;
     }
 
     // Update is called once per frame
@@ -48,22 +82,26 @@ public class JetPack : MonoBehaviour
         transform.Translate(movement * Time.deltaTime * speed);
         //transform.localRotation = Quaternion.Euler(-turn.y, turn.x, 0);
         */
-        float thrust = OVRInput.Get(OVRInput.Axis1D.SecondaryIndexTrigger);
+        if (inputSet)
+        {
+            float thrust = OVRInput.Get(inputJetpackController);
 
-        if(thrust > 0.1) { 
-            var forceVector = new Vector3(hand.transform.up.x, hand.transform.up.y, 0f)  * thrust * thrustMultiplier;
-            rb.AddForce(forceVector);
-            OVRInput.SetControllerVibration(1, thrust, OVRInput.Controller.RTouch);
-            OVRInput.SetControllerVibration(0,0,OVRInput.Controller.RTouch);
+            if(thrust > 0.1) { 
+                var forceVector = new Vector3(hand.transform.up.x, hand.transform.up.y, 0f)  * thrust * thrustMultiplier;
+                rb.AddForce(forceVector);
+                OVRInput.SetControllerVibration(1, thrust, controller);
+                OVRInput.SetControllerVibration(0,0,controller);
+            }
+
+            float backwardThrust = OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger);
+
+            if(backwardThrust > 0.1) { 
+                //var forceVector = new Vector3(hand.transform.up.x, hand.transform.up.y, 0f)  * backwardThrust * thrustMultiplier * -1f;
+                //rb.AddForce(forceVector);
+                rb.velocity *= 0.95f;
+            }
         }
-
-        float backwardThrust = OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger);
-
-        if(backwardThrust > 0.1) { 
-            //var forceVector = new Vector3(hand.transform.up.x, hand.transform.up.y, 0f)  * backwardThrust * thrustMultiplier * -1f;
-            //rb.AddForce(forceVector);
-            rb.velocity *= 0.95f;
-        }
+        
 
     }
 }

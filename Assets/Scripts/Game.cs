@@ -157,7 +157,7 @@ public class Game : MonoBehaviour
         }
         else if(other.gameObject.tag == "EnemySide") 
         {
-            GameManager.Instance.playerScore += 1;
+            Debug.Log("Added 1 by collider: " + other.gameObject.name);
             GameManager.Instance.PointScoredByPlayer(true);
             anim.Play("Base Layer.GetHit");
             //anim.Play("Base Layer.IdleBattle");

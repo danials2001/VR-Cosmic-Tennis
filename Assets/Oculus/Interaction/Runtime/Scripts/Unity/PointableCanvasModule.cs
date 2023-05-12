@@ -23,6 +23,7 @@ using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.Assertions;
 using System;
+using System.Linq;
 
 namespace Oculus.Interaction
 {
@@ -339,16 +340,31 @@ namespace Oculus.Interaction
 
         public override void Process()
         {
-            foreach (Pointer pointer in _pointersForDeletion)
-            {
-                ProcessPointer(pointer, true);
-            }
+            // foreach (Pointer pointer in _pointersForDeletion)
+            // {
+            //     ProcessPointer(pointer, true);
+            // }
+            // _pointersForDeletion.Clear();
+            //
+            // foreach (Pointer pointer in _pointerMap.Values)
+            // {
+            //     ProcessPointer(pointer);
+            // }
+            
+            
+            // Clone deleted pointers into in a local array to prevent
+            // InvalidOperationException: Collection was modified; enumeration operation may not execute.
+            var pointersToLoopOver = _pointersForDeletion.ToArray();
+            // Clear the deleted pointers list so it can start collecting newly delete pointers if those occur as a side effect to this method
             _pointersForDeletion.Clear();
+            foreach (Pointer pointer in pointersToLoopOver)
+                ProcessPointer(pointer, forceRelease: true);
 
-            foreach (Pointer pointer in _pointerMap.Values)
-            {
+            // Clone current pointers into a local array to prevent
+            // InvalidOperationException: Collection was modified; enumeration operation may not execute.
+            pointersToLoopOver = _pointerMap.Values.ToArray();
+            foreach (Pointer pointer in pointersToLoopOver)
                 ProcessPointer(pointer);
-            }
         }
 
         private void ProcessPointer(Pointer pointer, bool forceRelease = false)

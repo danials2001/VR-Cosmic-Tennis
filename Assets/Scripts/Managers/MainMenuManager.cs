@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class MainMenuManager : MonoBehaviour
 {
+    [SerializeField] private GameObject L_Paddle;
+    [SerializeField] private GameObject R_Paddle;
+    [SerializeField] private JetPack playerJetpack;
+    
     void Awake()
     {
         GameManager.OnGameStateChanged += EnableMainMenu;
@@ -32,11 +36,19 @@ public class MainMenuManager : MonoBehaviour
         {
             case 0:
                 // Left-Handed paddle
+                L_Paddle.SetActive(true);
+                R_Paddle.SetActive(false);
+                playerJetpack.setInputController(false);
+                Debug.Log("Left-Hand Paddle mode selected");
+
                 break;
             case 1:
                 // Right-Handed paddle
                 // TODO: Switch handedness
-                Debug.Log("Right-Hand mode selected");
+                L_Paddle.SetActive(false);
+                R_Paddle.SetActive(true);
+                playerJetpack.setInputController(true);
+                Debug.Log("Right-Hand Paddle mode selected");
                 break;
         }
     }

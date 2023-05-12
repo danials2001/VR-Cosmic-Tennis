@@ -1,8 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
+
+using System.Threading.Tasks;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,13 +18,16 @@ public class GameManager : MonoBehaviour
 
     public static event Action<GameState> OnGameStateChanged;
 
-    public int playerScore = 0, enemyScore = 0;
+    public int playerScore = 0;
+    public int enemyScore = 0;
 
     void Awake()
     {
         Instance = this;
         // Starting at normal game
+       
         UpdateGameState(GameState.MainMenu);
+        
     }
 
     public void UpdateGameState(GameState newState)
@@ -35,8 +42,10 @@ public class GameManager : MonoBehaviour
                 HandlePlayerTurn();
                 break;
             case GameState.Victory:
+                HandleVictory();
                 break;
             case GameState.Lose:
+                HandleLose();
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
@@ -48,7 +57,8 @@ public class GameManager : MonoBehaviour
     
     private void HandleMainMenu()
     {
-        
+        playerScore = 0;
+        enemyScore = 0;
     }
 
     private void HandlePlayerTurn()
@@ -59,13 +69,18 @@ public class GameManager : MonoBehaviour
         
     }
 
-    private void HandleVictory()
+    private async void HandleVictory()
     {
+        scoreUI.showWin();
         // FOR NOW 
+        await System.Threading.Tasks.Task.Delay(5000);
         Instance.UpdateGameState(GameState.MainMenu);
     }
-    private void HandleLose()
+    private async void HandleLose()
     {
+        scoreUI.showLose();
+
+        await System.Threading.Tasks.Task.Delay(5000);
         Instance.UpdateGameState(GameState.MainMenu);
     }
 
@@ -73,30 +88,33 @@ public class GameManager : MonoBehaviour
     {
         if (b) // Player Scored
         {
-            if (playerScore == 6 || playerScore == 7) // Player had 40 pts
+            if (playerScore == 3) // Player had 40 pts
             {
-                if (enemyScore == 6)
+                if (enemyScore == 3)
                 {
                     // Player-Enemy were at DEUCE
                     // Player moves to Adv
                     playerScore += 1;
                 }
-                else if (enemyScore > 6) // enemyScore was at Adv
+                else if (enemyScore == 4) // enemyScore was at Adv
                 {
                     enemyScore -= 1; // No point change in Player, Enemy point changed back to 40
                 }
                 else
                 {
                     // If Player was at 40, then scoring this point means they win
+                    Debug.Log("YOU WIN!");
                     Instance.UpdateGameState(GameState.Victory);
                     return;
                 }
             }
-            else if (playerScore == 8) // Player was at Adv
+            else if (playerScore == 4) // Player was at Adv
             {
                 // Player wins
+                Debug.Log("YOU WIN!");
                 Instance.UpdateGameState(GameState.Victory);
                 // TODO: CHECK will this break?
+                return;
             }
             else // Normal scenario, point increase (SHOULD WORK WITH DOUBLE TRIGGER ISSUE
             {
@@ -105,29 +123,32 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if (enemyScore == 6 || enemyScore == 7) // Player had 40 pts
+            if (enemyScore == 3) // Player had 40 pts
             {
-                if (playerScore == 6)
+                if (playerScore == 3)
                 {
                     // Player-Enemy were at DEUCE
                     // Player moves to Adv
                     enemyScore += 1;
                 }
-                else if (playerScore > 6) // enemyScore was at Adv
+                else if (playerScore == 4) // enemyScore was at Adv
                 {
                     playerScore -= 1; // No point change in Player, Enemy point changed back to 40
                 }
                 else
                 {
                     // If Player was at 40, then scoring this point means they win
+                    Debug.Log("YOU LOSE!");
                     Instance.UpdateGameState(GameState.Lose);
                     return;
                 }
             }
-            else if (enemyScore== 8) // Player was at Adv
+            else if (enemyScore== 4) // Player was at Adv
             {
                 // Player wins
+                Debug.Log("YOU LOSE!");
                 Instance.UpdateGameState(GameState.Lose);
+                return;
                 // will this break?
             }
             else // Normal scenario, point increase (SHOULD WORK WITH DOUBLE TRIGGER ISSUE
@@ -137,11 +158,11 @@ public class GameManager : MonoBehaviour
 
         }
         
+        Debug.Log("PlayerScore="+playerScore + ", EnemyScore="+enemyScore);
+        
         // Update Score
         scoreUI.UpdateScore();
     }
-
-
 
 }
 
