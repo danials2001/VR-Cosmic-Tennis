@@ -53,6 +53,8 @@ public class EnemyBehavior : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
             rb.AddForce(transform.forward * 150f);
             anim.Play("Base Layer.Attack02ST");
+            other.gameObject.GetComponent<BallState>().setState(1);
+            GetComponent<AudioSource>().Play();
             //anim.Play("Base Layer.IdleBattle");
         }
     }

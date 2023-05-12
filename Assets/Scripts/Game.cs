@@ -23,6 +23,9 @@ public class Game : MonoBehaviour
     [SerializeField]
     private float velocityThreshold = 2f;
 
+    [SerializeField]
+    private GameObject obstacles;
+
     private float startTime = 3.0f;
     private float resetTime = 5.0f;
     private float shootForce = 1.0f;
@@ -31,11 +34,15 @@ public class Game : MonoBehaviour
     private float randAngleX = 0.0f;
     private float randAngleY = 0.0f;
     private bool first = true;
+    private int currState;
 
     private int playerScore = 0, enemyScore = 0;
 
     private Vector3 shootDirection;
     private Animator anim;
+    private BallState ballState;
+    private AudioSource monsterGrowl;
+    private Attractor ballAttractor;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +52,10 @@ public class Game : MonoBehaviour
         transform.position = enemy.transform.position;
         hitSound = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
+        ballState = GetComponent<BallState>();
+        currState = ballState.getState();
+        monsterGrowl = enemy.GetComponent<AudioSource>();
+        ballAttractor = GetComponent<Attractor>();
         Invoke("ServeBall(false)", 1);
     }
 
@@ -64,6 +75,43 @@ public class Game : MonoBehaviour
         //     transform.position = desiredPosition;
         //     rb.velocity = Vector3.zero;
         // }
+        if(ballState.getState() == 2) //player has ball
+        {
+            transform.position = player.transform.position + (player.transform.forward * 0.5f);
+        }
+        if(ballState.getState() == 0) // ball going toward player
+        {
+            //check which side of obstacle ball is on
+            foreach(Transform child in obstacles.transform) 
+            {
+                // if ball is infront of obstacle
+                if(transform.position.z < child.position.z)
+                {
+                    child.gameObject.GetComponent<Attractor>().onDisable();
+                }    
+            }
+        }
+        if(ballState.getState() == 1) // ball going toward enemy
+        {
+            //check which side of obstacle ball is on
+            foreach(Transform child in obstacles.transform) 
+            {
+                // if ball is infront of obstacle
+                if(transform.position.z > child.position.z)
+                {
+                    child.gameObject.GetComponent<Attractor>().onDisable();
+                }    
+            }
+        }
+        if(currState != ballState.getState()) //state changed
+        {
+            //re enable all attractors
+            foreach(Transform child in obstacles.transform) 
+            {
+            child.gameObject.GetComponent<Attractor>().OnEnable();
+            }
+            currState = ballState.getState();
+        }
     }
 
     // side = false => player, side = true => enemy
@@ -84,13 +132,16 @@ public class Game : MonoBehaviour
             shootDirection = enemy.transform.forward + new Vector3(randAngleX,randAngleY,0f);
             rb.AddForce(shootDirection * shootForce);
             anim.Play("Base Layer.Attack01");
+            monsterGrowl.Play();
             //anim.Play("Base Layer.IdleBattle");
             Debug.Log("enemy serve");
             Debug.Log(shootDirection);
+            ballState.setState(1);
         }
         else
         {
             transform.position = player.transform.position + (player.transform.forward * 0.5f);// + new Vector3(0f,0f,2f);
+            ballState.setState(2);
             Debug.Log("player Serve");
         }
     }
@@ -120,6 +171,7 @@ public class Game : MonoBehaviour
             {
                 hitSound.Play();
             }
+            ballState.setState(0);
         }
     }
 }

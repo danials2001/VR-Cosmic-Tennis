@@ -28,7 +28,7 @@ public class Attractor : MonoBehaviour
         rbToAttract.AddForce(force);
     }
 
-    void OnEnable()
+    public void OnEnable()
     {
         if (Attractors == null)
         {
@@ -38,7 +38,7 @@ public class Attractor : MonoBehaviour
         Attractors.Add(this);
     }
 
-    void onDisable()
+    public void onDisable()
     {
         Attractors.Remove(this);
     }

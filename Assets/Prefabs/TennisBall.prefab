@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 500136541552462960}
   - component: {fileID: 2674219063234289933}
   - component: {fileID: 586052293856628608}
+  - component: {fileID: 1262529307665169009}
   m_Layer: 6
   m_Name: TennisBall
   m_TagString: Ball
@@ -242,3 +243,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   G: 6.674
   rb: {fileID: 3719711561291366377}
+--- !u!114 &1262529307665169009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4566219171999924922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee8a1c8db2b4c5345b4a925d9973bf35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
