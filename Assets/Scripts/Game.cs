@@ -100,12 +100,14 @@ public class Game : MonoBehaviour
         if(other.gameObject.tag == "PlayerSide")
         {
             Debug.Log("Added 1 by collider: " + other.gameObject.name);
-            GameManager.Instance.enemyScore += 1;
+            // Add point to enemy (false)
+            GameManager.Instance.PointScoredByPlayer(false);
             ServeBall(false);
         }
         else if(other.gameObject.tag == "EnemySide") 
         {
             GameManager.Instance.playerScore += 1;
+            GameManager.Instance.PointScoredByPlayer(true);
             anim.Play("Base Layer.GetHit");
             //anim.Play("Base Layer.IdleBattle");
             rb.velocity = Vector3.zero;
