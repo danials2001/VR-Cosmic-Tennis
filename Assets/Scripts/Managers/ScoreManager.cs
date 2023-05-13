@@ -10,6 +10,9 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] public TextMeshProUGUI scoreText;
 
     private string[] scoreValues = {"0","15","30","40","Adv"};
+    
+    private AudioSource[] audioSourcesWinLose;
+
     // void Awake()
     // {
     //     // Instance = this;
@@ -32,27 +35,38 @@ public class ScoreManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioSourcesWinLose = GetComponents<AudioSource>();
+        Debug.Log("Audios#="+audioSourcesWinLose.Length);
     }
 
     public void ResetScore()
     {
         scoreText.text = "0:0";
+        scoreText.color = Color.white;
 
     }
 
-    public void UpdateScore()
+    public void UpdateScore(bool leftPoint)
     {
+        if (leftPoint)
+            audioSourcesWinLose[2].Play();
+        else
+            audioSourcesWinLose[3].Play();
+        
         scoreText.text = scoreValues[GameManager.Instance.playerScore] + ":" +  scoreValues[GameManager.Instance.enemyScore];
     }
 
     public void showWin()
     {
+        audioSourcesWinLose[0].Play();
+        scoreText.color = Color.green;
         scoreText.text = "You Win!";
     }
 
     public void showLose()
     {
+        audioSourcesWinLose[1].Play();
+        scoreText.color = Color.red;
         scoreText.text = "You Lose!";
     }
 

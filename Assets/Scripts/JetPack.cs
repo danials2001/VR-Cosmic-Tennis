@@ -93,7 +93,7 @@ public class JetPack : MonoBehaviour
                 OVRInput.SetControllerVibration(0,0,controller);
             }
 
-            float backwardThrust = OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger);
+            float backwardThrust = OVRInput.Get(inputBackwardJetpackController);
 
             if(backwardThrust > 0.1) { 
                 //var forceVector = new Vector3(hand.transform.up.x, hand.transform.up.y, 0f)  * backwardThrust * thrustMultiplier * -1f;

@@ -169,7 +169,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("PlayerScore="+playerScore + ", EnemyScore="+enemyScore);
         
         // Update Score
-        scoreUI.UpdateScore();
+        scoreUI.UpdateScore(b);
     }
 }
 
