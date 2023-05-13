@@ -10,6 +10,11 @@ using System.Threading.Tasks;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject ball;
+
+    private Game game;
+
     public ScoreManager scoreUI;
     
     public static GameManager Instance;
@@ -25,6 +30,7 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         // Starting at normal game
+        game = ball.GetComponent<Game>();
        
         UpdateGameState(GameState.MainMenu);
         
@@ -59,6 +65,7 @@ public class GameManager : MonoBehaviour
     {
         playerScore = 0;
         enemyScore = 0;
+        ball.GetComponent<BallState>().setState(3);
     }
 
     private void HandlePlayerTurn()
@@ -66,12 +73,13 @@ public class GameManager : MonoBehaviour
         scoreUI.ResetScore();
         // Should set up necessary things so that player begins
         // Will include enabling movement scripts
-        
+        game.ServeBall(false);
     }
 
     private async void HandleVictory()
     {
         scoreUI.showWin();
+        ball.GetComponent<BallState>().setState(3);
         // FOR NOW 
         await System.Threading.Tasks.Task.Delay(5000);
         Instance.UpdateGameState(GameState.MainMenu);
@@ -79,7 +87,7 @@ public class GameManager : MonoBehaviour
     private async void HandleLose()
     {
         scoreUI.showLose();
-
+        ball.GetComponent<BallState>().setState(3);
         await System.Threading.Tasks.Task.Delay(5000);
         Instance.UpdateGameState(GameState.MainMenu);
     }

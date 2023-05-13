@@ -11,6 +11,7 @@ public class MainMenuManager : MonoBehaviour
     void Awake()
     {
         GameManager.OnGameStateChanged += EnableMainMenu;
+        dropdownHandedness(0);
     }
 
     void OnDestroy()

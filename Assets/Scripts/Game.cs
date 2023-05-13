@@ -56,7 +56,8 @@ public class Game : MonoBehaviour
         currState = ballState.getState();
         monsterGrowl = enemy.GetComponent<AudioSource>();
         ballAttractor = GetComponent<Attractor>();
-        Invoke("ServeBall(false)", 1);
+        ballState.setState(3);
+        //Invoke("ServeBall(false)", 1);
     }
 
     // Update is called once per frame
@@ -84,10 +85,13 @@ public class Game : MonoBehaviour
             //check which side of obstacle ball is on
             foreach(Transform child in obstacles.transform) 
             {
+                Transform quad = child.GetChild(1);
+                Vector3 diff = transform.position - quad.position;
                 // if ball is infront of obstacle
-                if(transform.position.z < child.position.z)
+                if(Vector3.Dot(diff, quad.forward) > 0)
                 {
                     child.gameObject.GetComponent<Attractor>().onDisable();
+                    //Debug.Log("ball passed obstacle going to player");
                 }    
             }
         }
@@ -96,12 +100,18 @@ public class Game : MonoBehaviour
             //check which side of obstacle ball is on
             foreach(Transform child in obstacles.transform) 
             {
+                Transform quad = child.GetChild(1);
+                Vector3 diff = transform.position - quad.position;
                 // if ball is infront of obstacle
-                if(transform.position.z > child.position.z)
+                if(Vector3.Dot(diff, quad.forward) < 0)
                 {
                     child.gameObject.GetComponent<Attractor>().onDisable();
+                    //Debug.Log("ball passed obstacle going to enemy");
                 }    
             }
+        }
+        if(ballState.getState() == 3) { //game paused
+            transform.position = player.transform.position - (player.transform.forward * 2f);
         }
         if(currState != ballState.getState()) //state changed
         {
@@ -115,13 +125,14 @@ public class Game : MonoBehaviour
     }
 
     // side = false => player, side = true => enemy
-    void ServeBall(bool side)
+    public void ServeBall(bool side)
     {
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         // shoot from enemy side
         if (side) 
         {
+            ballState.setState(1);
             transform.position = enemy.transform.position + new Vector3(0f,2f,0f);
 
             shootForce = forceMultiplyer;
@@ -136,12 +147,11 @@ public class Game : MonoBehaviour
             //anim.Play("Base Layer.IdleBattle");
             Debug.Log("enemy serve");
             Debug.Log(shootDirection);
-            ballState.setState(1);
         }
         else
         {
-            transform.position = player.transform.position + (player.transform.forward * 0.5f);// + new Vector3(0f,0f,2f);
             ballState.setState(2);
+            transform.position = player.transform.position + (player.transform.forward * 0.5f);// + new Vector3(0f,0f,2f);
             Debug.Log("player Serve");
         }
     }
@@ -153,6 +163,9 @@ public class Game : MonoBehaviour
             Debug.Log("Added 1 by collider: " + other.gameObject.name);
             // Add point to enemy (false)
             GameManager.Instance.PointScoredByPlayer(false);
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            
             ServeBall(false);
         }
         else if(other.gameObject.tag == "EnemySide") 

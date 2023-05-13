@@ -52,7 +52,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1415455038243148104}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20f884f32e63bea4b8ee9887d7a55968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxPaddleAngle: 45
   _sensitivity: 90
   velocity_threshold: 9
 --- !u!54 &1415455038243148111
@@ -124,7 +125,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1415455038243148104}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3bbeaae3ecd57f40ab0e8749dae2d6b, type: 3}
   m_Name: 
