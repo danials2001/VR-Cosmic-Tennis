@@ -123,7 +123,7 @@ public class Game : MonoBehaviour
             }
             currState = ballState.getState();
         }
-        if(timer > 10f) {
+        if(timer > 15f && ballState.getState() != 3) {
             ballState.setState(2);
         }
     }
