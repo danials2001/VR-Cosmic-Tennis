@@ -16,7 +16,7 @@ public class PaddleFollower : MonoBehaviour
 	private float _sensitivity = 100f;
 
 	[SerializeField]
-	private float velocity_threshold = 2f;
+	private float velocity_threshold = 4f;
 
 	private void Awake()
 	{

@@ -7,6 +7,8 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private GameObject L_Paddle;
     [SerializeField] private GameObject R_Paddle;
     [SerializeField] private JetPack playerJetpack;
+    [SerializeField] private GameObject L_Controller;
+    [SerializeField] private GameObject R_Controller;
     
     void Awake()
     {
@@ -39,6 +41,8 @@ public class MainMenuManager : MonoBehaviour
                 // Left-Handed paddle
                 L_Paddle.SetActive(true);
                 R_Paddle.SetActive(false);
+                L_Controller.SetActive(false);
+                R_Controller.SetActive(true);
                 playerJetpack.setInputController(false);
                 Debug.Log("Left-Hand Paddle mode selected");
 
@@ -48,6 +52,8 @@ public class MainMenuManager : MonoBehaviour
                 // TODO: Switch handedness
                 L_Paddle.SetActive(false);
                 R_Paddle.SetActive(true);
+                L_Controller.SetActive(true);
+                R_Controller.SetActive(false);
                 playerJetpack.setInputController(true);
                 Debug.Log("Right-Hand Paddle mode selected");
                 break;
