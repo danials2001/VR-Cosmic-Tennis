@@ -63,7 +63,7 @@ public class Game : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        // timer += Time.deltaTime;
+        timer += Time.deltaTime;
         // if(timer > startTime && first)
         // {
         //     ServeBall(true);
@@ -78,43 +78,44 @@ public class Game : MonoBehaviour
         // }
         if(ballState.getState() == 2) //player has ball
         {
-            transform.position = player.transform.position + (player.transform.forward * 0.5f);
+            transform.position = player.transform.position + (player.transform.forward * 0.6f);
         }
-        if(ballState.getState() == 0) // ball going toward player
-        {
-            //check which side of obstacle ball is on
-            foreach(Transform child in obstacles.transform) 
-            {
-                Transform quad = child.GetChild(1);
-                Vector3 diff = transform.position - quad.position;
-                // if ball is infront of obstacle
-                if(Vector3.Dot(diff, quad.forward) > 0)
-                {
-                    child.gameObject.GetComponent<Attractor>().onDisable();
-                    //Debug.Log("ball passed obstacle going to player");
-                }    
-            }
-        }
-        if(ballState.getState() == 1) // ball going toward enemy
-        {
-            //check which side of obstacle ball is on
-            foreach(Transform child in obstacles.transform) 
-            {
-                Transform quad = child.GetChild(1);
-                Vector3 diff = transform.position - quad.position;
-                // if ball is infront of obstacle
-                if(Vector3.Dot(diff, quad.forward) < 0)
-                {
-                    child.gameObject.GetComponent<Attractor>().onDisable();
-                    //Debug.Log("ball passed obstacle going to enemy");
-                }    
-            }
-        }
+        // if(ballState.getState() == 0) // ball going toward player
+        // {
+        //     //check which side of obstacle ball is on
+        //     foreach(Transform child in obstacles.transform) 
+        //     {
+        //         Transform quad = child.GetChild(1);
+        //         Vector3 diff = transform.position - quad.position;
+        //         // if ball is infront of obstacle
+        //         if(Vector3.Dot(diff, quad.forward) > 0)
+        //         {
+        //             child.gameObject.GetComponent<Attractor>().onDisable();
+        //             //Debug.Log("ball passed obstacle going to player");
+        //         }    
+        //     }
+        // }
+        // if(ballState.getState() == 1) // ball going toward enemy
+        // {
+        //     //check which side of obstacle ball is on
+        //     foreach(Transform child in obstacles.transform) 
+        //     {
+        //         Transform quad = child.GetChild(1);
+        //         Vector3 diff = transform.position - quad.position;
+        //         // if ball is infront of obstacle
+        //         if(Vector3.Dot(diff, quad.forward) < 0)
+        //         {
+        //             child.gameObject.GetComponent<Attractor>().onDisable();
+        //             //Debug.Log("ball passed obstacle going to enemy");
+        //         }    
+        //     }
+        // }
         if(ballState.getState() == 3) { //game paused
             transform.position = player.transform.position - (player.transform.forward * 2f);
         }
         if(currState != ballState.getState()) //state changed
         {
+            timer = 0f;
             //re enable all attractors
             foreach(Transform child in obstacles.transform) 
             {
@@ -122,11 +123,15 @@ public class Game : MonoBehaviour
             }
             currState = ballState.getState();
         }
+        if(timer > 10f) {
+            ballState.setState(2);
+        }
     }
 
     // side = false => player, side = true => enemy
-    public void ServeBall(bool side)
+    public IEnumerator ServeBall(bool side)
     {
+        yield return new WaitForSeconds(1);
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         // shoot from enemy side
@@ -151,7 +156,7 @@ public class Game : MonoBehaviour
         else
         {
             ballState.setState(2);
-            transform.position = player.transform.position + (player.transform.forward * 0.5f);// + new Vector3(0f,0f,2f);
+            transform.position = player.transform.position + (player.transform.forward * 0.6f);// + new Vector3(0f,0f,2f);
             Debug.Log("player Serve");
         }
     }
@@ -164,9 +169,11 @@ public class Game : MonoBehaviour
             // Add point to enemy (false)
             GameManager.Instance.PointScoredByPlayer(false);
             rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            
-            ServeBall(false);
+            rb.angularVelocity = Vector3.zero; 
+            if(GameManager.Instance.State == GameState.TennisGame){
+                StartCoroutine(ServeBall(false));    
+            }
+       
         }
         else if(other.gameObject.tag == "EnemySide") 
         {
@@ -176,7 +183,9 @@ public class Game : MonoBehaviour
             //anim.Play("Base Layer.IdleBattle");
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
-            Invoke("ServeBall(true)", 1);
+            if(GameManager.Instance.State == GameState.TennisGame){
+                StartCoroutine(ServeBall(true));
+            }
         }
         else
         {

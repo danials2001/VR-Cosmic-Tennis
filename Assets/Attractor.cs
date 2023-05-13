@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Attractor : MonoBehaviour
 {
+    [SerializeField]
+    float maxDistance = 10f;
 
     public float G = 6.674f;
 
-    public static List<Attractor> Attractors = new List<Attractor>();
+    public static HashSet<Attractor> Attractors = new HashSet<Attractor>();
     public Rigidbody rb;
 
     void Attract(Attractor otherAttractor)
@@ -17,7 +19,7 @@ public class Attractor : MonoBehaviour
         Vector3 direction = rb.position - rbToAttract.position;
         float distance = direction.magnitude;
 
-        if (distance == 0)
+        if (distance == 0 || maxDistance > 10f)
         {
             return;
         }
@@ -32,7 +34,7 @@ public class Attractor : MonoBehaviour
     {
         if (Attractors == null)
         {
-            Attractors = new List<Attractor>();
+            Attractors = new HashSet<Attractor>();
         }
 
         Attractors.Add(this);

@@ -573,6 +573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc4d6d76889211d41b636e99b9c326ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxDistance: 10
   G: 5.7
   rb: {fileID: 148363294}
 --- !u!114 &148363292
@@ -7582,7 +7583,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 494976, guid: fa49e460baf435b4780da7196c2ab473, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 494976, guid: fa49e460baf435b4780da7196c2ab473, type: 3}
       propertyPath: m_LocalScale.x
@@ -7688,6 +7689,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc4d6d76889211d41b636e99b9c326ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxDistance: 10
   G: 5.7
   rb: {fileID: 2078573877}
 --- !u!135 &2078573880

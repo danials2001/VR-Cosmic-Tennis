@@ -48,9 +48,11 @@ public class GameManager : MonoBehaviour
                 HandlePlayerTurn();
                 break;
             case GameState.Victory:
+                ball.GetComponent<BallState>().setState(3);
                 HandleVictory();
                 break;
             case GameState.Lose:
+                ball.GetComponent<BallState>().setState(3);
                 HandleLose();
                 break;
             default:
@@ -73,13 +75,12 @@ public class GameManager : MonoBehaviour
         scoreUI.ResetScore();
         // Should set up necessary things so that player begins
         // Will include enabling movement scripts
-        game.ServeBall(false);
+        StartCoroutine(game.ServeBall(false));
     }
 
     private async void HandleVictory()
     {
         scoreUI.showWin();
-        ball.GetComponent<BallState>().setState(3);
         // FOR NOW 
         await System.Threading.Tasks.Task.Delay(5000);
         Instance.UpdateGameState(GameState.MainMenu);
@@ -87,7 +88,6 @@ public class GameManager : MonoBehaviour
     private async void HandleLose()
     {
         scoreUI.showLose();
-        ball.GetComponent<BallState>().setState(3);
         await System.Threading.Tasks.Task.Delay(5000);
         Instance.UpdateGameState(GameState.MainMenu);
     }
@@ -171,7 +171,6 @@ public class GameManager : MonoBehaviour
         // Update Score
         scoreUI.UpdateScore();
     }
-
 }
 
 public enum GameState {
